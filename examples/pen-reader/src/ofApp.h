@@ -25,6 +25,8 @@ class ofApp : public ofBaseApp{
 
 		void onPen(penEvent &args);
 
+		ofTrueTypeFont myFont;
+
 		ofxCooperHewittOscPen ch_pen;
 
 	protected:

@@ -3,6 +3,9 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 	ofLog() << "Hello Pen!" << endl;
+
+	myFont.loadFont("arial.ttf", 64);
+
 	ch_pen.setup(8000);
 
 	// register events
@@ -18,10 +21,10 @@ void ofApp::update(){
 void ofApp::draw(){
 
 	ofClear(0);
-	ofDrawBitmapString("Hello Pen", 100, 100);
+	myFont.drawString("Tap your pen", 100, 100);
 
 	if (penMessage.length() ) {
-		ofDrawBitmapString("Last pen: " + penMessage, 100, 200);
+		myFont.drawString("Your pen: " + penMessage, 100, 200);
 	}
 
 }
@@ -30,8 +33,14 @@ void ofApp::draw(){
 
 void ofApp::onPen(penEvent & args)
 {
-	penMessage = args.penID;
-	ofLog() << "PEN!: " << args.penID << endl;
+	string shortcode = args.visitID;
+	int found = args.visitID.find_first_of("#");
+	if (found > 0 && found < shortcode.length()) {
+		shortcode = args.visitID.substr(0, found);
+	}
+
+	penMessage = shortcode;
+	ofLog() << "This pen is paired with shortcode: " << shortcode << endl;
 }
 
 //--------------------------------------------------------------
