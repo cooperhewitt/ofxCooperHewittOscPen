@@ -39,7 +39,7 @@ public:
 	void getPenMessages();
 
 	ofEvent <std::string> onReader;
-	ofEvent <std::vector<std::string>> onAllReaders;
+	ofEvent <int> onAllReaders;
 	ofEvent <penEvent> onPen;
 	ofEvent <penStatusEvent> onPenDone;
 	ofEvent <penStatusEvent> onPenCancel;

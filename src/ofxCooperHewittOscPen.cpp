@@ -62,9 +62,11 @@ void ofxCooperHewittOscPen::getPenMessages()
 				m.getArgAsString(0),
 				m.getArgAsString(1),
 				m.getArgAsString(2),
-				m.getArgAsInt32(3)
+				m.getArgAsBool(3)
 			};
 			ofLogNotice("ofxCooperHewittOscPen") << "Done reading pen: " << penStatus.penID << endl;
+			ofNotifyEvent(onPenDone, penStatus, this);
+
 		}
 
 		else if ((m.getAddress() == PEN_CANCEL_OSC_ADDRESS) && (m.getNumArgs() == NUM_PEN_STATUS_ARGS)) {
@@ -74,6 +76,8 @@ void ofxCooperHewittOscPen::getPenMessages()
 				m.getArgAsString(2)
 			};
 			ofLogNotice("ofxCooperHewittOscPen") << "Canceled reading pen: " << penStatus.penID << endl;
+			ofNotifyEvent(onPenCancel, penStatus, this);
+
 		}
 
 		else if (m.getAddress() == READER_OSC_ADDRESS) {
@@ -84,7 +88,8 @@ void ofxCooperHewittOscPen::getPenMessages()
 		
 		else if (m.getAddress() == ALL_READERS_ADDRESS) {
 			int numReaders = m.getArgAsInt32(0);
-			ofLogNotice("ofxCooperHewittOscPen") << "Numbr of readers: " << numReaders << endl;
+			ofLogNotice("ofxCooperHewittOscPen") << "Number of readers: " << numReaders << endl;
+			ofNotifyEvent(onAllReaders, numReaders, this);
 		}
 	}
 
