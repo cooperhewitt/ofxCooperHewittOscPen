@@ -23,6 +23,12 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
+		void onPen(penEvent &args);
+
 		ofxCooperHewittOscPen ch_pen;
+
+	protected:
+
+		string penMessage;
 		
 };

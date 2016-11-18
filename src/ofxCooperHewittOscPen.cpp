@@ -23,7 +23,7 @@ void ofxCooperHewittOscPen::setup(int port)
 	oscReceiver.setup(port);
 }
 
-string ofxCooperHewittOscPen::getPenMessages()
+void ofxCooperHewittOscPen::getPenMessages()
 {
 	while (oscReceiver.hasWaitingMessages()) {
 		ofxOscMessage m;
@@ -42,6 +42,7 @@ string ofxCooperHewittOscPen::getPenMessages()
 				m.getArgAsFloat(6)
 			};
 			ofLogNotice("ofxCooperHewittOscPen") << "Reading Tag: " << tag.tagID << " for Visit: " << tag.visitID << endl;
+			ofNotifyEvent(onTag, tag, this);
 		}
 		
 		else if ((m.getAddress() == PEN_OSC_ADDRESS) && (m.getNumArgs() == NUM_PEN_ARGS)) {
@@ -52,6 +53,8 @@ string ofxCooperHewittOscPen::getPenMessages()
 				m.getArgAsFloat(3),
 			};
 			ofLogNotice("ofxCooperHewittOscPen") << "Reading Pen: " << pen.penID << endl;
+			ofNotifyEvent(onPen, pen, this);
+
 		}
 
 		else if ((m.getAddress() == PEN_DONE_OSC_ADDRESS) && (m.getNumArgs() == NUM_PEN_STATUS_ARGS)) {
@@ -76,6 +79,7 @@ string ofxCooperHewittOscPen::getPenMessages()
 		else if (m.getAddress() == READER_OSC_ADDRESS) {
 			string readerID = m.getArgAsString(0);
 			ofLogNotice("ofxCooperHewittOscPen") << "Reader ID: " << readerID << endl;
+			ofNotifyEvent(onReader, readerID, this);
 		}
 		
 		else if (m.getAddress() == ALL_READERS_ADDRESS) {
@@ -84,5 +88,4 @@ string ofxCooperHewittOscPen::getPenMessages()
 		}
 	}
 
-	return string();
 }

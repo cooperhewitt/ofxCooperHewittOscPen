@@ -4,6 +4,9 @@
 void ofApp::setup(){
 	ofLog() << "Hello Pen!" << endl;
 	ch_pen.setup(8000);
+
+	// register events
+	ofAddListener(ch_pen.onPen, this, &ofApp::onPen);
 }
 
 //--------------------------------------------------------------
@@ -17,6 +20,18 @@ void ofApp::draw(){
 	ofClear(0);
 	ofDrawBitmapString("Hello Pen", 100, 100);
 
+	if (penMessage.length() ) {
+		ofDrawBitmapString("Last pen: " + penMessage, 100, 200);
+	}
+
+}
+
+//--------------------------------------------------------------
+
+void ofApp::onPen(penEvent & args)
+{
+	penMessage = args.penID;
+	ofLog() << "PEN!: " << args.penID << endl;
 }
 
 //--------------------------------------------------------------
@@ -68,6 +83,8 @@ void ofApp::windowResized(int w, int h){
 void ofApp::gotMessage(ofMessage msg){
 
 }
+
+
 
 //--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){ 
