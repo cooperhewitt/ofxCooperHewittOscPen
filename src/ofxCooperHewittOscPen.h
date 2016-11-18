@@ -10,6 +10,10 @@ public:
 	ofxCooperHewittOscPen();
 	~ofxCooperHewittOscPen();
 
+	string getPenMessages();
+
 protected:
+
+	ofxOscReceiver oscReceiver;
 
 };
